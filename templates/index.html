@@ -13,6 +13,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            background-color: #808080;
         }
         #title-bar {
             background-color: red;
@@ -29,11 +30,19 @@
             height: 400px;
             width: 100%;
         }
+        .searchable-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+        }
+        .searchable-dropdown input, .searchable-dropdown select {
+            width: 100%;
+        }
         .controls-container {
             position: absolute;
             top: 60px;
-            left: 75%; /* Positioned at three quarters width, to be in the center of the right half */
-            transform: translateX(-50%); /* Center the controls-container at this position */
+            left: 75%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: flex-end;
@@ -41,7 +50,7 @@
         select {
             width: 200px;
             padding: 5px;
-            margin-bottom: 10px; /* Added space between dropdowns */
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -49,11 +58,16 @@
     <div id="title-bar">Is The MTA Racist?</div>
 
     <div class="controls-container">
-        <!-- Dropdown for selecting neighborhood -->
-        <select id="neighborhood-dropdown">
-            <option value="">Select Neighborhood</option>
-            <!-- Options will be populated dynamically -->
-        </select>
+        <!-- Searchable Dropdown for selecting neighborhood -->
+        <div class="searchable-dropdown">
+            <input type="text" id="neighborhood-input" placeholder="Type to search...">
+            <select id="neighborhood-dropdown">
+                <option value="">Select Neighborhood</option>
+                {% for location in locations %}
+                <option value="{{ location }}">{{ location }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
         <!-- Dropdown for selecting train line -->
         <select id="trainline-dropdown">
@@ -74,26 +88,35 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-gZwQqov7RQJB4DxPhe6gkxjIw7eet/NMfttq+bfsekSRI3x9bKE5BR/V3uV6mGe1a6P/cz5o7IhKPjV+I1I6eA=="
     crossorigin=""></script>
+    
     <!-- Custom JavaScript for interactions and data loading -->
     <script>
-        // Existing JavaScript code remains unchanged...
+        // Additional JavaScript for handling dropdowns and map interactions
     </script>
+
+    <!-- JavaScript to make neighborhood dropdown searchable -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var trainSelect = document.getElementById('trainline-dropdown');
-            trainSelect.addEventListener('input', filterOptions);
-    
-            function filterOptions() {
-                var input = trainSelect.value.toUpperCase();
-                var options = trainSelect.options;
-    
-                for (var i = 1; i < options.length; i++) {
-                    var option = options[i];
-                    var optionText = option.text.toUpperCase();
-                    var shouldShow = optionText.startsWith(input);
-                    option.style.display = shouldShow ? '' : 'none';
+            var inputField = document.getElementById('neighborhood-input');
+            var dropdown = document.getElementById('neighborhood-dropdown');
+
+            inputField.addEventListener('keyup', function() {
+                var filter = inputField.value.toUpperCase();
+                var options = dropdown.options;
+                for (var i = 0; i < options.length; i++) {
+                    var txtValue = options[i].textContent || options[i].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        options[i].style.display = "";
+                    } else {
+                        options[i].style.display = "none";
+                    }
                 }
-            }
+            });
+
+            // Sync the select dropdown with the input field
+            dropdown.addEventListener('change', function() {
+                inputField.value = dropdown.options[dropdown.selectedIndex].text;
+            });
         });
     </script>
 </body>
