@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Data Dashboard</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2JoaLlnzLlNS/kit+nDX4PqCgYt4lDnA/jcXTMlV/0jz7jRyfqJw1TT1MvzLtwTuqFqCqg=="
+    crossorigin=""/>
+    <!-- Custom CSS for styling -->
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        select {
+            width: 200px;
+            padding: 5px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Dropdown for selecting neighborhood -->
+        <select id="neighborhood-dropdown">
+            <option value="">Select Neighborhood</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+
+        <!-- Dropdown for selecting train line -->
+        <select id="trainline-dropdown">
+            <option value="">Select Train Line</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+    </div>
+
+    <!-- Map placeholder -->
+    <div id="map"></div>
+
+    <!-- Placeholder for pie chart and data boxes will go here -->
+    <!-- These can be dynamically created and inserted using JavaScript -->
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-gZwQqov7RQJB4DxPhe6gkxjIw7eet/NMfttq+bfsekSRI3x9bKE5BR/V3uV6mGe1a6P/cz5o7IhKPjV+I1I6eA=="
+    crossorigin=""></script>
+    <!-- Custom JavaScript for interactions and data loading -->
+    <script>
+        // Initialize the map on the "map" div with a given center and zoom
+        var map = L.map('map').setView([40.7128, -74.0060], 10); // Example coordinates for New York
+
+        // Add a base layer (OpenStreetMap tiles)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Additional JavaScript to handle dropdown changes and data visualization will go here
+    </script>
+</body>
+</html>
