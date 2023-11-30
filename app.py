@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -32,7 +33,13 @@ def index():
        "W train (Broadway local)",
         "Z train (Nassau Street express)"
     ]
-    return render_template("index.html", title=project_title, train_lines=train_lines)
+    df = pd.read_csv('Median_Incomes.csv')
+    
+    # Filter by TimeFrame and get unique locations
+    locations = df[df['TimeFrame'] == 2018]['Location'].unique().tolist()
+   
+
+    return render_template("index.html", title=project_title,locations=locations, train_lines=train_lines)
   
 
 if __name__ == '__main__':
