@@ -1,4 +1,4 @@
-[Hamzat's LinkedIn](https://www.linkedin.com/in/hamzat-olowu-abb474208/)  [David's LinkedIn]()  [Baljinder's LinkedIn](https://www.linkedin.com/in/baljinder-hothi/)
+[Hamzat](https://www.linkedin.com/in/hamzat-olowu-abb474208/)  [David]()  [Baljinder](https://www.linkedin.com/in/baljinder-hothi/) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
 
 # Is-The-MTA-Racist
 
