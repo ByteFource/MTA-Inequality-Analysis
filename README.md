@@ -1,3 +1,5 @@
+[Hamzat's LinkedIn](https://www.linkedin.com/in/hamzat-olowu-abb474208/)  [David's LinkedIn]()  [Baljinder's LinkedIn](https://www.linkedin.com/in/baljinder-hothi/)
+
 # Is-The-MTA-Racist
 
 This README provides instructions on how to set up your development environment and run the Flask application.
