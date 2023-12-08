@@ -1,4 +1,4 @@
-[Hamzat](https://cha0stig3r.github.io/)  [David]()  [Baljinder](https://www.baljinderhothi.github.io) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
+[Hamzat](https://cha0stig3r.github.io/)  [David]()  [Baljinder](https://baljinderhothi.github.io) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
 
 # Is-The-MTA-Racist
 
@@ -128,7 +128,7 @@ The app will be accessible at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 ```sh
 pip freeze > requirements.txt
 ```
-
+</details>
 
 
 
