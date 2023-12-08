@@ -14,10 +14,11 @@ This project represents a pivotal effort in data journalism, focusing on the int
 
   
 #### The Problem at Hand
+<summary>Click to expand!</summary>
 The core issue addressed in this project is understanding the patterns and distribution of MTA delays in New York City, with a specific focus on uncovering how these delays are disproportionately occurring across various neighborhoods. Our investigation seeks to unravel the complex interplay between station locations, local demographic profiles, and the incidence of delays, highlighting areas where public transit inefficiencies are most pronounced.
 
 #### Key Features
-
+<summary>Click to expand!</summary>
 This project boasts several innovative features that provide a comprehensive analysis of MTA delays in relation to local area demographics:
 
 - **Streamlit Web Interface through Flask**: An interactive web application built using Flask and integrated with Streamlit, offering users an intuitive and user-friendly platform to explore our findings and data.
@@ -30,7 +31,7 @@ This project boasts several innovative features that provide a comprehensive ana
 
 
 #### Built Using
-<!-- Add details about the technologies and tools used here -->
+<summary>Click to expand!</summary>
 **Python
 **Flask
 **Pandas
@@ -96,7 +97,7 @@ cd Is-The-MTA-Racist
      ```sh
      source env/bin/activate
      ```
-
+</details>
 ## Install Dependencies
 
 While the virtual environment is active, install the project dependencies using pip:
@@ -130,21 +131,6 @@ pip freeze > requirements.txt
 
 
 
-## Usage
-
-<summary>Click to expand!</summary>
-
-<!-- Provide instructions on how to use the project here -->
-Placeholder text for Usage.
-
-
-## Demo
-<details>
-<summary>Click to expand!</summary>
-
-<!-- Provide links or descriptions for the demo here -->
-Placeholder text for Demo.
-</details>
 
 ## Findings
 <details>
