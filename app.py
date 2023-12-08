@@ -87,9 +87,12 @@ def index():
     
     if request.method == 'POST':
         line = get_train_lines()[request.form.get('train_line')]
-        m = make_map(line)
-        context['map'] = m.get_root().render()
-        
+    else:
+        line = None
+    
+    m = make_map(line)
+    context['map'] = m.get_root().render()
+
     return render_template("index.html", **context)
 
 def get_train_lines():
