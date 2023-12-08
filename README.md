@@ -107,7 +107,7 @@ The app will be accessible at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 ```sh
 pip freeze > requirements.txt
 ```
-# Key Features
+## Key Features
 <details>
   <summary>Click to expand!</summary>
   
@@ -115,7 +115,7 @@ pip freeze > requirements.txt
   Placeholder text for Key Features.
 </details>
 
-# Built With
+## Built With
 <details>
   <summary>Click to expand!</summary>
   
@@ -123,7 +123,7 @@ pip freeze > requirements.txt
   Placeholder text for Built With.
 </details>
 
-# Usage
+## Usage
 <details>
   <summary>Click to expand!</summary>
   
@@ -131,7 +131,7 @@ pip freeze > requirements.txt
   Placeholder text for Usage.
 </details>
 
-# Demo
+## Demo
 <details>
   <summary>Click to expand!</summary>
   
@@ -139,7 +139,7 @@ pip freeze > requirements.txt
   Placeholder text for Demo.
 </details>
 
-# Reports
+## Reports
 <details>
   <summary>Click to expand!</summary>
   
@@ -147,7 +147,7 @@ pip freeze > requirements.txt
   Placeholder text for Reports.
 </details>
 
-# Contributing
+## Contributing
 <details>
   <summary>Click to expand!</summary>
   
@@ -155,7 +155,7 @@ pip freeze > requirements.txt
   Placeholder text for Contributing.
 </details>
 
-# License
+## License
 <details>
   <summary>Click to expand!</summary>
   
@@ -163,7 +163,7 @@ pip freeze > requirements.txt
   Placeholder text for License.
 </details>
 
-# Contact
+## Contact
 <details>
   <summary>Click to expand!</summary>
   
