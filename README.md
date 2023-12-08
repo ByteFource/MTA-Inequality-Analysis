@@ -18,6 +18,8 @@
 </details>
 
 ## Getting Started
+<details>
+  <summary>Click to expand!</summary>
 
 ### Prerequisites
 
