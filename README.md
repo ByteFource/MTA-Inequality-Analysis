@@ -10,18 +10,33 @@
 ### About the Project
 <details>
 <summary>Click to expand!</summary>
+This project represents a pivotal effort in data journalism, focusing on the intricate relationship between local area median income, racial demographics, and the frequency of MTA delays at different stations across New York City. Leveraging comprehensive datasets, including census data and MTA delay records, our investigation reveals a striking pattern: many of the most delayed stations predominantly lie within lower-income neighborhoods. This finding not only highlights the disparities in public transportation efficiency but also raises important questions about urban planning and equity in city infrastructures.
 
+  
 #### The Problem at Hand
-<!-- Add details about the problem here -->
-Placeholder text for The Problem at Hand.
+The core issue addressed in this project is understanding the patterns and distribution of MTA delays in New York City, with a specific focus on uncovering how these delays are disproportionately occurring across various neighborhoods. Our investigation seeks to unravel the complex interplay between station locations, local demographic profiles, and the incidence of delays, highlighting areas where public transit inefficiencies are most pronounced.
 
 #### Key Features
-<!-- Add details about the key features here -->
-Placeholder text for Key Features.
+
+This project boasts several innovative features that provide a comprehensive analysis of MTA delays in relation to local area demographics:
+
+- **Streamlit Web Interface through Flask**: An interactive web application built using Flask and integrated with Streamlit, offering users an intuitive and user-friendly platform to explore our findings and data.
+
+- **Race and Income Map with Train Lines**: A detailed map showcasing the correlation between race, income levels, and MTA delays, overlaid with train lines and neighborhood boundaries. This visual tool is instrumental in understanding the geographical distribution of delays in relation to socioeconomic factors.
+
+- **Race Demographics Pie Chart**: An insightful pie chart representation that breaks down the racial composition of neighborhoods affected by MTA delays, providing a clear visual of demographic disparities.
+
+- **Local Area Delay Analysis**: Focused analysis on local areas, offering detailed insights into how MTA delays impact specific neighborhoods, with an emphasis on understanding the variance in delay frequency and duration in different areas.
+
 
 #### Built Using
 <!-- Add details about the technologies and tools used here -->
-Placeholder text for Built Using.
+**Python
+**Flask
+**Pandas
+**GeoPandas
+**IpyLeaflet
+**ADD OTHERS HERE AFTER ASKING GROUP MEMBERS
 </details>
 </details>
 
