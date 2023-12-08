@@ -49,9 +49,9 @@ This project boasts several innovative features that provide a comprehensive ana
 
   - Python 3.9.10+
   - Git
-
+</details>
   ### Clone the Repository
-
+<details>
   Clone this repository to your local machine using the following command:
 
   ```sh
@@ -62,9 +62,9 @@ This project boasts several innovative features that provide a comprehensive ana
 git clone https://github.com/ByteFource/Is-The-MTA-Racist.git
 cd Is-The-MTA-Racist
 ```
-
+</details>
 ### Setup
-<summary>Click to expand!</summary>
+<details>
 1. **Navigate to the repository directory:**
 
    ```sh
@@ -98,8 +98,9 @@ cd Is-The-MTA-Racist
      ```sh
      source env/bin/activate
      ```
+     </details>
 ## Install Dependencies
-<summary>Click to expand!</summary>
+<details>
 
 While the virtual environment is active, install the project dependencies using pip:
 
@@ -129,7 +130,7 @@ The app will be accessible at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 ```sh
 pip freeze > requirements.txt
 ```
-
+</details>
 
 
 
