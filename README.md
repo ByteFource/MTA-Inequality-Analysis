@@ -1,7 +1,8 @@
 [Hamzat](https://cha0stig3r.github.io/)  [David]()  [Baljinder](https://www.baljinderhothi.hithub.io) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
 
 # Is-The-MTA-Racist
-# About The Project
+
+## About The Project
 <details>
   <summary>Click to expand!</summary>
   
@@ -9,7 +10,7 @@
   Placeholder text for About The Project.
 </details>
 
-# Problem Statement
+## Problem Statement
 <details>
   <summary>Click to expand!</summary>
   
@@ -21,14 +22,18 @@
 <details>
   <summary>Click to expand!</summary>
 
-### Prerequisites
+  ### Prerequisites
 
-- Python 3.9.10+
-- Git
+  - Python 3.9.10+
+  - Git
 
-### Clone the Repository
+  ### Clone the Repository
 
-Clone this repository to your local machine using the following command:
+  Clone this repository to your local machine using the following command:
+
+  ```sh
+  git clone https://github.com/ByteFource/Is-The-MTA-Racist.git
+  cd Is-The-MTA-Racist
 
 ```sh
 git clone https://github.com/ByteFource/Is-The-MTA-Racist.git
