@@ -98,7 +98,7 @@ for debug mode.
 The app will be accessible at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 
 **Note: remember to activate the virtual environment every time you want to run the app, qnd freeze the requirements if you add any new ones:**
-
+<details>
 ```sh
 pip freeze > requirements.txt
 ```
@@ -116,30 +116,6 @@ pip freeze > requirements.txt
   
   <!-- List technologies used in the project here -->
   Placeholder text for Built With.
-</details>
-
-# Getting Started
-<details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add instructions to get started with the project here -->
-  Placeholder text for Getting Started.
-</details>
-
-# Prerequisites
-<details>
-  <summary>Click to expand!</summary>
-  
-  <!-- List prerequisites for the project here -->
-  Placeholder text for Prerequisites.
-</details>
-
-# Setup
-<details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add setup instructions here -->
-  Placeholder text for Setup.
 </details>
 
 # Usage
