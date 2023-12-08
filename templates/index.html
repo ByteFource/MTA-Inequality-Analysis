@@ -13,7 +13,15 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #808080;
+            background-color: #808080 !important;
+        }
+        .app {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
         }
         #title-bar {
             background-color: red;
@@ -21,13 +29,21 @@
             padding: 10px 20px;
             display: inline-block;
             position: absolute;
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
             margin-top: 10px;
             font-size: 24px;
         }
+        #map-container {
+            height: 500px;
+            width: 60%;
+            position: relative;
+            margin: 50px 20px 20px 20px;
+            background-color: white;
+        }
         #map {
-            height: 400px;
+            height: 100%;
             width: 100%;
         }
         .searchable-dropdown {
@@ -39,7 +55,6 @@
             width: 100%;
         }
         .controls-container {
-            position: absolute;
             top: 60px;
             left: 75%;
             transform: translateX(-50%);
@@ -56,33 +71,45 @@
 </head>
 <body>
     <div id="title-bar">Is The MTA Racist?</div>
+    
+    <div class="app">
 
-    <div class="controls-container">
-        <!-- Searchable Dropdown for selecting neighborhood -->
-        <div class="searchable-dropdown">
-            <input type="text" id="neighborhood-input" placeholder="Type to search...">
-            <select id="neighborhood-dropdown">
-                <option value="">Select Neighborhood</option>
-                {% for location in locations %}
-                <option value="{{ location }}">{{ location }}</option>
-                {% endfor %}
-            </select>
+        <!-- Map placeholder -->
+        <div id="map-container">
+            <div id="map">
+                {% if map %}
+                    {{ map|safe}}
+                {% endif %}
+            </div>
         </div>
 
         <!-- Dropdown for selecting train line -->
-        <form method="POST">
-            <select name="train_line" id="trainline-dropdown">
-                <option value="">Select Train Line</option>
-                {% for train_line in train_lines %}
-                <option value="{{ train_line }}">{{ train_line }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+        <form action="/" method="POST">
 
-    <!-- Map placeholder -->
-    <div id="map"></div>
+            <div class="controls-container">
+                <!-- Searchable Dropdown for selecting neighborhood -->
+                <div class="searchable-dropdown">
+                    <input type="text" id="neighborhood-input" placeholder="Type to search...">
+                    <select id="neighborhood-dropdown">
+                        <option value="">Select Neighborhood</option>
+                        {% for location in locations %}
+                        <option value="{{ location }}">{{ location }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Dropdown for selecting train line -->
+                <select name="train_line" id="trainline-dropdown">
+                    <option value="default">Select Train Line</option>
+                    {% for train_line in train_lines %}
+                    <option value="{{ train_line }}">{{ train_line }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    
+    </div>
 
     <!-- Placeholder for pie chart and data boxes will go here -->
     <!-- These can be dynamically created and inserted using JavaScript -->
@@ -121,12 +148,6 @@
                 inputField.value = dropdown.options[dropdown.selectedIndex].text;
             });
         });
-
-        L.map('map').fitWorld();
-        {% if map %}
-            var geojson = {{ map }};
-            L.geoJSON(geojson).addTo(map);
-        {% endif %}
     </script>
 </body>
 </html>
