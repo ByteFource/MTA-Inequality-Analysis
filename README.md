@@ -1,4 +1,4 @@
-[Hamzat](https://cha0stig3r.github.io/)  [David]()  [Baljinder](https://www.baljinderhothi.hithub.io) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
+[Hamzat](https://cha0stig3r.github.io/)  [David]()  [Baljinder](https://www.baljinderhothi.github.io) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
 
 # Is-The-MTA-Racist
 
