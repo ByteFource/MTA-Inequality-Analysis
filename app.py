@@ -12,13 +12,21 @@ gdf_subway = gpd.read_file('data/my_subway_lines.geojson')
 
 
 def make_map(line):
-    center = [40.7128, -74.0060]
-    zoom = 11
-    base_map = 'CartoDB Voyager'
-    m = folium.Map(location=center, zoom_start=zoom, control_scale=True, prefer_canvas=True, tiles=base_map)
     
     rt_id_to_stops = route_id_to_stops.set_index('route_id').T.to_dict('list')
     rt_id_to_stops = {k: v[0].split(', ') for k, v in rt_id_to_stops.items()}
+    
+    if line:
+        zoom = 12
+        center = gdf_stops_delay_count[gdf_stops_delay_count['stop_id'].isin(rt_id_to_stops[line])][['GTFS Latitude', 'GTFS Longitude']].mean().tolist()
+    else:
+        center = [40.7128, -74.0060]
+        zoom = 11
+    
+    base_map = 'CartoDB Voyager'
+    m = folium.Map(location=center, zoom_start=zoom, control_scale=True, prefer_canvas=True, tiles=base_map)
+    
+    
     
     if line:
         stops = rt_id_to_stops[line]
@@ -27,7 +35,7 @@ def make_map(line):
         gdf_stops = gdf_stops_delay_count
     
     for _, row in gdf_stops.iterrows():
-        folium.Marker(location=[row['GTFS Latitude'], row['GTFS Longitude']], popup=f"Stop: {row['Stop Name']}").add_to(m)
+        folium.Marker(location=[row['GTFS Latitude'], row['GTFS Longitude']], popup=f"Stop: {row['Stop Name']}\n Delays: {row['Delay Count']}").add_to(m)
     
     
     # explain the colors of the subway lines
@@ -58,7 +66,7 @@ def make_map(line):
     folium.GeoJson(data=gdf_line,
             style_function=lambda feature: {
                 'color': feature['properties']['RGB Hex'],
-                'weight': 2,
+                'weight': 7,
                 'opacity': 1,
             },
             tooltip=folium.GeoJsonTooltip(fields=['Line/Branch'], aliases=['Subway Line'], sticky=True, opacity=0.9, direction='top')
