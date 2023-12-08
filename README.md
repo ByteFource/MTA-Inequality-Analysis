@@ -50,7 +50,7 @@ This project boasts several innovative features that provide a comprehensive ana
   - Python 3.9.10+
   - Git
 </details>
-  ### Clone the Repository
+### Clone the Repository
 <details>
   Clone this repository to your local machine using the following command:
 
