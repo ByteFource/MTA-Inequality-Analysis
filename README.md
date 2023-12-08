@@ -1,8 +1,10 @@
-[Hamzat](https://www.linkedin.com/in/hamzat-olowu-abb474208/)  [David]()  [Baljinder](https://www.linkedin.com/in/baljinder-hothi/) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
+[Hamzat](https://cha0stig3r.github.io/)  [David]()  [Baljinder](https://www.baljinderhothi.hithub.io) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
 
 # Is-The-MTA-Racist
 
-This README provides instructions on how to set up your development environment and run the Flask application.
+## Getting Started
+<details>
+  <summary>Click to expand!</summary>
 
 ## Getting Started
 
