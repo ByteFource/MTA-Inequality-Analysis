@@ -64,6 +64,7 @@ cd Is-The-MTA-Racist
 ```
 
 ### Setup
+<summary>Click to expand!</summary>
 1. **Navigate to the repository directory:**
 
    ```sh
@@ -97,8 +98,8 @@ cd Is-The-MTA-Racist
      ```sh
      source env/bin/activate
      ```
-</details>
 ## Install Dependencies
+<summary>Click to expand!</summary>
 
 While the virtual environment is active, install the project dependencies using pip:
 
@@ -128,7 +129,7 @@ The app will be accessible at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 ```sh
 pip freeze > requirements.txt
 ```
-</details>
+
 
 
 
