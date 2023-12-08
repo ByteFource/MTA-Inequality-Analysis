@@ -1,10 +1,21 @@
 [Hamzat](https://cha0stig3r.github.io/)  [David]()  [Baljinder](https://www.baljinderhothi.hithub.io) [Khaled](https://www.linkedin.com/in/khaled-ahmed1/)
 
 # Is-The-MTA-Racist
-
-## Getting Started
+# About The Project
 <details>
   <summary>Click to expand!</summary>
+  
+  <!-- Add your information about the project here -->
+  Placeholder text for About The Project.
+</details>
+
+# Problem Statement
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add your problem statement here -->
+  Placeholder text for Problem Statement.
+</details>
 
 ## Getting Started
 
@@ -89,3 +100,90 @@ The app will be accessible at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 ```sh
 pip freeze > requirements.txt
 ```
+# Key Features
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add your key features here -->
+  Placeholder text for Key Features.
+</details>
+
+# Built With
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- List technologies used in the project here -->
+  Placeholder text for Built With.
+</details>
+
+# Getting Started
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add instructions to get started with the project here -->
+  Placeholder text for Getting Started.
+</details>
+
+# Prerequisites
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- List prerequisites for the project here -->
+  Placeholder text for Prerequisites.
+</details>
+
+# Setup
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add setup instructions here -->
+  Placeholder text for Setup.
+</details>
+
+# Usage
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add usage instructions here -->
+  Placeholder text for Usage.
+</details>
+
+# Demo
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add link or description of the demo here -->
+  Placeholder text for Demo.
+</details>
+
+# Reports
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add any report links or descriptions here -->
+  Placeholder text for Reports.
+</details>
+
+# Contributing
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add contributing guidelines here -->
+  Placeholder text for Contributing.
+</details>
+
+# License
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add license information here -->
+  Placeholder text for License.
+</details>
+
+# Contact
+<details>
+  <summary>Click to expand!</summary>
+  
+  <!-- Add contact information here -->
+  Placeholder text for Contact.
+</details>
