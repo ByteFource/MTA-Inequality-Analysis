@@ -2,27 +2,34 @@
 
 # Is-The-MTA-Racist
 
-## About The Project
-<details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add your information about the project here -->
-  Placeholder text for About The Project.
-</details>
 
-## Problem Statement
+## Table of Contents
 <details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add your problem statement here -->
-  Placeholder text for Problem Statement.
+<summary>Click to expand!</summary>
+
+### About the Project
+<details>
+<summary>Click to expand!</summary>
+
+#### The Problem at Hand
+<!-- Add details about the problem here -->
+Placeholder text for The Problem at Hand.
+
+#### Key Features
+<!-- Add details about the key features here -->
+Placeholder text for Key Features.
+
+#### Built Using
+<!-- Add details about the technologies and tools used here -->
+Placeholder text for Built Using.
+</details>
 </details>
 
 ## Getting Started
 <details>
-  <summary>Click to expand!</summary>
+<summary>Click to expand!</summary>
 
-  ### Prerequisites
+### What You Need
 
   - Python 3.9.10+
   - Git
@@ -40,8 +47,7 @@ git clone https://github.com/ByteFource/Is-The-MTA-Racist.git
 cd Is-The-MTA-Racist
 ```
 
-## Set Up Virtual Environment
-
+### Setup
 1. **Navigate to the repository directory:**
 
    ```sh
@@ -107,67 +113,49 @@ The app will be accessible at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 ```sh
 pip freeze > requirements.txt
 ```
-  </details>
-## Key Features
-<details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add your key features here -->
-  Placeholder text for Key Features.
-</details>
-
-## Built With
-<details>
-  <summary>Click to expand!</summary>
-  
-  <!-- List technologies used in the project here -->
-  Placeholder text for Built With.
 </details>
 
 ## Usage
 <details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add usage instructions here -->
-  Placeholder text for Usage.
+<summary>Click to expand!</summary>
+
+<!-- Provide instructions on how to use the project here -->
+Placeholder text for Usage.
 </details>
 
 ## Demo
 <details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add link or description of the demo here -->
-  Placeholder text for Demo.
+<summary>Click to expand!</summary>
+
+<!-- Provide links or descriptions for the demo here -->
+Placeholder text for Demo.
 </details>
 
-## Reports
+## Findings
 <details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add any report links or descriptions here -->
-  Placeholder text for Reports.
-</details>
+<summary>Click to expand!</summary>
 
-## Contributing
-<details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add contributing guidelines here -->
-  Placeholder text for Contributing.
+<!-- Present your findings or results here -->
+Placeholder text for Findings.
 </details>
 
 ## License
 <details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add license information here -->
-  Placeholder text for License.
+<summary>Click to expand!</summary>
+
+<!-- Include licensing information here -->
+Placeholder text for License.
 </details>
 
-## Contact
+## Our Group
 <details>
-  <summary>Click to expand!</summary>
-  
-  <!-- Add contact information here -->
-  Placeholder text for Contact.
+<summary>Click to expand!</summary>
+
+### Contact
+<!-- Provide contact information here -->
+Placeholder text for Contact.
+
+### About Us
+<!-- Share information about the team here -->
+Placeholder text for About Us.
 </details>
