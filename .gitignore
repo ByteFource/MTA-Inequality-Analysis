@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.pyc
+.cpython-*
+__pycache__/app.cpython-39.pyc
 
 
 # environments

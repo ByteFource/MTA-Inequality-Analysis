@@ -70,12 +70,15 @@
         </div>
 
         <!-- Dropdown for selecting train line -->
-        <select id="trainline-dropdown">
-            <option value="">Select Train Line</option>
-            {% for train_line in train_lines %}
-            <option value="{{ train_line }}">{{ train_line }}</option>
-            {% endfor %}
-        </select>
+        <form method="POST">
+            <select name="train_line" id="trainline-dropdown">
+                <option value="">Select Train Line</option>
+                {% for train_line in train_lines %}
+                <option value="{{ train_line }}">{{ train_line }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit">
+        </form>
     </div>
 
     <!-- Map placeholder -->
@@ -103,12 +106,12 @@
             inputField.addEventListener('keyup', function() {
                 var filter = inputField.value.toUpperCase();
                 var options = dropdown.options;
-                for (var i = 0; i < options.length; i++) {
-                    var txtValue = options[i].textContent || options[i].innerText;
+                for (const element of options) {
+                    var txtValue = element.textContent || element.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        options[i].style.display = "";
+                        element.style.display = "";
                     } else {
-                        options[i].style.display = "none";
+                        element.style.display = "none";
                     }
                 }
             });
@@ -118,6 +121,12 @@
                 inputField.value = dropdown.options[dropdown.selectedIndex].text;
             });
         });
+
+        L.map('map').fitWorld();
+        {% if map %}
+            var geojson = {{ map }};
+            L.geoJSON(geojson).addTo(map);
+        {% endif %}
     </script>
 </body>
 </html>
