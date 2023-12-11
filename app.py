@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import pandas as pd
 import geopandas as gpd
 import folium
+import fiona
 
 app = Flask(__name__)
 
@@ -9,6 +10,8 @@ route_id_to_stops = pd.read_csv('data/route_id_to_stops.csv')
 stops_delay_count = pd.read_csv('data/stops_delay_count.csv')
 gdf_stops_delay_count = gpd.GeoDataFrame(stops_delay_count, geometry=gpd.points_from_xy(stops_delay_count['GTFS Longitude'], stops_delay_count['GTFS Latitude']), crs='EPSG:4326')
 gdf_subway = gpd.read_file('data/my_subway_lines.geojson')
+gdf_avg_inc = gpd.read_file('data/average_income_2021.geojson')
+fi = fiona.open('data/average_income_2021.geojson')
 
 
 def make_map(line):
@@ -26,23 +29,72 @@ def make_map(line):
     base_map = 'CartoDB Voyager'
     m = folium.Map(location=center, zoom_start=zoom, control_scale=True, prefer_canvas=True, tiles=base_map)
     
+    income_choropleth = folium.Choropleth(
+        geo_data=gdf_avg_inc,
+        name='Income by Zip Code',
+        data=gdf_avg_inc,
+        columns=['ZipCode', 'B19013001'],
+        key_on='feature.properties.ZipCode',
+        fill_color='YlGnBu',
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name='Average Income',
+        highlight=True,
+        smooth_factor=0
+    ).add_to(m)
     
+    income_tooltip = folium.features.GeoJsonTooltip(
+        fields=['ZipCode', 'B19013001', 'Neighborhood', 'Borough'],
+        aliases=['Zip Code', 'Average Income', 'Neighborhood', 'Borough'],
+        labels=True,
+        sticky=True,
+        opacity=0.9,
+        direction='top'
+    )
     
+    income_choropleth.geojson.add_child(income_tooltip)
+        
+    if line:
+        gdf_line = gdf_subway[gdf_subway['name'].str.contains(line)]
+    else:
+        gdf_line = gdf_subway
+    
+    folium.GeoJson(data=gdf_line,
+                   name='Subway Lines',
+                   style_function=lambda feature: {
+                       'color': feature['properties']['RGB Hex'],
+                       'weight': 7,
+                       'opacity': 1,
+                    },
+                   tooltip=folium.GeoJsonTooltip(fields=['Line/Branch'], aliases=['Subway Line'], sticky=True, opacity=0.9, direction='top')
+    ).add_to(m)
+    
+       
     if line:
         stops = rt_id_to_stops[line]
         gdf_stops = gdf_stops_delay_count[gdf_stops_delay_count['stop_id'].isin(stops)]
     else:
         gdf_stops = gdf_stops_delay_count
+        
+    markers = folium.FeatureGroup(name='Stops')
+    m.add_child(markers)
+    marker_tooltip = 'Click for more info.'
     
     for _, row in gdf_stops.iterrows():
-        folium.Marker(location=[row['GTFS Latitude'], row['GTFS Longitude']], popup=f"Stop: {row['Stop Name']}\n Delays: {row['Delay Count']}").add_to(m)
-    
+        marker = folium.CircleMarker(
+            location=[row['GTFS Latitude'], row['GTFS Longitude']],
+            radius=4,
+            color='black',fill=True,
+            fill_color='white',
+            fill_opacity=1,
+            tooltip= marker_tooltip,
+            popup=f"Stop: {row['Stop Name']}\n Delays: {row['Delay Count']} ")
+        marker.add_to(markers)
     
     # explain the colors of the subway lines
     legend_html = '''
          <div style="position: fixed; 
-         bottom: 50px; left: 50px; width: 200px; height: 230px; 
-         border:2px solid grey; z-index:9999; font-size:14px;
+         bottom: 50px; left: 50px; width: 200px; height: 230px; z-index:9999; font-size:14px;
          ">&nbsp; Subway Lines <br>
          &nbsp; 1 2 3 &nbsp; <i class="fa fa-circle" style="color:#EE352E"></i><br>
          &nbsp; 4 5 6 &nbsp; <i class="fa fa-circle" style="color:#00933C"></i><br>
@@ -56,24 +108,39 @@ def make_map(line):
          &nbsp; S &nbsp; <i class="fa fa-circle" style="color:#808183"></i><br>
             </div>
             '''
+    
+    mp = m.get_name()
+    mrk = markers.get_name()
+
+    js_callback = f'''
+    function show_hide_markers() {{
+
+        var map = {mp};
+        var markers = {mrk};
+        
+        function show_markers() {{
+            var zoomlevel = map.getZoom();
+            if (zoomlevel < 13) {{
+                markers.removeFrom(map);
+            }} else {{
+                markers.addTo(map);
+            }}
+        }}
+
+        map.on('zoomend', show_markers);
+        show_markers();
+    }}
+
+    window.onload = show_hide_markers;
+    '''
+    
     m.get_root().html.add_child(folium.Element(legend_html))
+    m.get_root().script.add_child(folium.Element(js_callback))
     
-    if line:
-        gdf_line = gdf_subway[gdf_subway['name'].str.contains(line)]
-    else:
-        gdf_line = gdf_subway
-    
-    folium.GeoJson(data=gdf_line,
-            style_function=lambda feature: {
-                'color': feature['properties']['RGB Hex'],
-                'weight': 7,
-                'opacity': 1,
-            },
-            tooltip=folium.GeoJsonTooltip(fields=['Line/Branch'], aliases=['Subway Line'], sticky=True, opacity=0.9, direction='top')
-            ).add_to(m)
+    b = fi.bounds
+    m.fit_bounds([[b[1], b[0]], [b[3], b[2]]])
     
     folium.LayerControl().add_to(m)
-    
     return m
 
 @app.route('/', methods=['GET', 'POST'])
@@ -125,7 +192,7 @@ def get_train_lines():
         "N train (Broadway express)" : "N",
         "Q train (2 Avenue/Broadway express)" : "Q",
         "R train (Queens Boulevard/Broadway/4 Avenue local)" : "R",
-       "S 42 St Shuttle, Franklin Av Shuttle, and Rockaway Park Shuttle trains (shuttle service)" : "S",
+       "S 42 St Shuttle, Franklin Av Shuttle, and Rockaway Park Shuttle trains (shuttle service)" : "FS",
        "W train (Broadway local)" : "W",
         "Z train (Nassau Street express) " : "Z",
         "default": None
