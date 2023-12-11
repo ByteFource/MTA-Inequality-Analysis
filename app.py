@@ -11,8 +11,6 @@ stops_delay_count = pd.read_csv('data/stops_delay_count.csv')
 gdf_stops_delay_count = gpd.GeoDataFrame(stops_delay_count, geometry=gpd.points_from_xy(stops_delay_count['GTFS Longitude'], stops_delay_count['GTFS Latitude']), crs='EPSG:4326')
 gdf_subway = gpd.read_file('data/my_subway_lines.geojson')
 gdf_avg_inc = gpd.read_file('data/average_income_2021.geojson')
-fi = fiona.open('data/average_income_2021.geojson')
-
 
 def make_map(line):
     
@@ -43,13 +41,13 @@ def make_map(line):
         smooth_factor=0
     ).add_to(m)
     
-    income_tooltip = folium.features.GeoJsonTooltip(
-        fields=['ZipCode', 'B19013001', 'Neighborhood', 'Borough'],
-        aliases=['Zip Code', 'Average Income', 'Neighborhood', 'Borough'],
-        labels=True,
-        sticky=True,
-        opacity=0.9,
-        direction='top'
+    income_tooltip = folium.GeoJsonTooltip(
+        fields=['ZipCode', 'B19013001', 'Neighborhood', 'Borough'], 
+        aliases=['Zip Code:', 'Average Income:', 'Neighborhood:', 'Borough:'],
+        sticky=True, 
+        opacity=0.9, 
+        direction='top',
+        style="font-size: 12px; max-width: 300px;",
     )
     
     income_choropleth.geojson.add_child(income_tooltip)
@@ -66,7 +64,15 @@ def make_map(line):
                        'weight': 7,
                        'opacity': 1,
                     },
-                   tooltip=folium.GeoJsonTooltip(fields=['Line/Branch'], aliases=['Subway Line'], sticky=True, opacity=0.9, direction='top')
+                   tooltip=folium.GeoJsonTooltip(
+                       fields=['Line/Branch'], 
+                       aliases=['Subway Line:'], 
+                       sticky=True, 
+                       opacity=0.9, 
+                       direction='top',
+                       style="font-size: 12px; max-width: 300px;",
+                       labels=True
+                    )
     ).add_to(m)
     
        
@@ -81,14 +87,30 @@ def make_map(line):
     marker_tooltip = 'Click for more info.'
     
     for _, row in gdf_stops.iterrows():
-        marker = folium.CircleMarker(
-            location=[row['GTFS Latitude'], row['GTFS Longitude']],
-            radius=4,
-            color='black',fill=True,
-            fill_color='white',
-            fill_opacity=1,
-            tooltip= marker_tooltip,
-            popup=f"Stop: {row['Stop Name']}\n Delays: {row['Delay Count']} ")
+        delay = row['Average Delay per Line']
+        
+        if delay <= 0:
+            color = 'blue'
+        elif delay <= 60:
+            color = 'green'
+        else:
+            color = 'red'
+        
+        # remove '[' and ']' from the list of branches
+        branch = row['branch'].replace('[', '').replace(']', '')
+        
+        pop_up = f"""<p style='font-size: 16px'><b>Stop</b>: {row['Stop Name']}</p>
+                    <p style='font-size: 14px'><b>Borough</b>: {row['Borough']}</p>
+                    <p style='font-size: 14px'><b>Train Lines</b>: {branch}</p>
+                    <p style='font-size: 14px'><b>Average Delay per Line</b>: {row['Average Delay per Line (mins)']}</p>
+                """
+        
+        marker = folium.Marker(
+                    location=[row['GTFS Latitude'], row['GTFS Longitude']], 
+                    popup=folium.Popup(pop_up, max_width=300),
+                    icon=folium.Icon(color=color, icon='info-sign'),
+                    tooltip=marker_tooltip
+                ).add_to(m)
         marker.add_to(markers)
     
     # explain the colors of the subway lines
@@ -136,9 +158,6 @@ def make_map(line):
     
     m.get_root().html.add_child(folium.Element(legend_html))
     m.get_root().script.add_child(folium.Element(js_callback))
-    
-    b = fi.bounds
-    m.fit_bounds([[b[1], b[0]], [b[3], b[2]]])
     
     folium.LayerControl().add_to(m)
     return m
@@ -192,7 +211,7 @@ def get_train_lines():
         "N train (Broadway express)" : "N",
         "Q train (2 Avenue/Broadway express)" : "Q",
         "R train (Queens Boulevard/Broadway/4 Avenue local)" : "R",
-       "S 42 St Shuttle, Franklin Av Shuttle, and Rockaway Park Shuttle trains (shuttle service)" : "FS",
+       "S 42 St Shuttle, Franklin Av Shuttle, and Rockaway Park Shuttle trains (shuttle service)" : "S",
        "W train (Broadway local)" : "W",
         "Z train (Nassau Street express) " : "Z",
         "default": None
