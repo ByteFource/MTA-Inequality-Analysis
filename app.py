@@ -103,6 +103,7 @@ def make_map(line):
                     <p style='font-size: 14px'><b>Borough</b>: {row['Borough']}</p>
                     <p style='font-size: 14px'><b>Train Lines</b>: {branch}</p>
                     <p style='font-size: 14px'><b>Average Delay per Line</b>: {row['Average Delay per Line (mins)']}</p>
+                    <p style='font-size: 14px'><b>Delays</b>: {row['Delay Count']}</p>
                 """
         
         marker = folium.Marker(
