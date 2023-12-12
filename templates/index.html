@@ -48,14 +48,6 @@
             height: 100%;
             width: 100%;
         }
-        .searchable-dropdown {
-            position: relative;
-            display: inline-block;
-            width: 200px;
-        }
-        .searchable-dropdown input, .searchable-dropdown select {
-            width: 100%;
-        }
         .controls-container {
             top: 60px;
             left: 75%;
@@ -81,24 +73,19 @@
                 {% if map %}
                     {{ map|safe}}
                 {% endif %}
-            </div><select name="train_line" id="trainline-dropdown" style="max-width: 200px;" class="form-control mb-3">
-                    <option value="default">Select Train Line</option>
-                    {% for train_line in train_lines %}
-                    <option value="{{ train_line }}">{{ train_line }}</option>
-                    {% endfor %}
-                </select>
+            </div>
         </div>
 
         <!-- Dropdown for selecting train line -->
         <form action="/" method="POST" class="form-inline">
             <div class="controls-container">
-                <!-- Searchable Dropdown for selecting neighborhood -->
-                <div class="searchable-dropdown mb-3">
-                    <input type="text" id="neighborhood-input" placeholder="Type to search..." class="form-control">
-                    
-                </div>
 
                 <!-- Dropdown for selecting train line -->
+                <select name="train_line" id="trainline-dropdown" style="max-width: 200px;" class="form-control mb-3">
+                    <option value="default">Select Train Line</option>
+                    {% for train_line in train_lines %}
+                    <option value="{{ train_line }}">{{ train_line }}</option>
+                    {% endfor %}
                 
                 <input type="submit" value="Submit" class="btn btn-primary">
             </div>
@@ -139,10 +126,7 @@
                 inputField.value = dropdown.options[dropdown.selectedIndex].text;
             });
         });
-    </script>
-
-<div id="sidebar" style="position: absolute; right: 0; top: 0; width: 20%; height: 100%; background-color: rgba(255, 255, 255, 0.9); padding: 10px;">
-    
+    </script>  
 </div>
 </body>
 </html>
