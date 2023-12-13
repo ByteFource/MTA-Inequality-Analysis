@@ -11,6 +11,7 @@ stops_delay_count = pd.read_csv('data/stops_delay_count.csv')
 gdf_stops_delay_count = gpd.GeoDataFrame(stops_delay_count, geometry=gpd.points_from_xy(stops_delay_count['GTFS Longitude'], stops_delay_count['GTFS Latitude']), crs='EPSG:4326')
 gdf_subway = gpd.read_file('data/my_subway_lines.geojson')
 gdf_avg_inc = gpd.read_file('data/average_income_2021.geojson')
+race = gpd.read_file('data/nyc-race.geojson')
 
 def make_map(line):
     
@@ -51,6 +52,33 @@ def make_map(line):
     )
     
     income_choropleth.geojson.add_child(income_tooltip)
+    
+    race_choropleth = folium.Choropleth(
+        geo_data=race,
+        name='NYC Race Map',
+        data=race,
+        columns=['name', 'Total Population'],
+        key_on='feature.properties.name',
+        fill_color='YlOrBr',
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name='Total Population',
+        highlight=True,
+        smooth_factor=1.0
+    ).add_to(m)
+
+    fields = ['Total Population', 'White alone', 'Black or African American Alone', 'American Indian and Alaska Native alone', 'Asian alone', 'Native Hawaiian and Other Pacific Islander Alone', 'Some other race alone', 'Two or more races','Hispanic or Latino (Total)']
+    aliases = [field + ':' for field in fields]
+    race_tooltip = folium.GeoJsonTooltip(
+        fields=['name', *fields],
+        aliases=['Zip Code:', *aliases],
+        sticky=True, 
+        opacity=0.9, 
+        direction='top',
+        style="font-size: 12px; max-width: 500px;",
+    )
+
+    race_choropleth.geojson.add_child(race_tooltip)
         
     if line:
         gdf_line = gdf_subway[gdf_subway['name'].str.contains(line)]
@@ -74,7 +102,6 @@ def make_map(line):
                        labels=True
                     )
     ).add_to(m)
-    
        
     if line:
         stops = rt_id_to_stops[line]
