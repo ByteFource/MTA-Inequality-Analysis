@@ -200,19 +200,23 @@ def index():
     project_title = "Is The Mta Racist?"
     # Pass the project title to the template
     
-    context = {
-        'title': project_title,
-        'default_map': 'race',
-        'train_lines': get_train_lines()
-    }
     
     if request.method == 'POST':
-        line = get_train_lines()[request.form.get('train_line')]
+        selected_line = request.form.get('train_line')
         default = request.form.get('map_type')
         print(default)
     else:
-        line = None
+        selected_line = 'default'
         default = 'race'
+    
+    context = {
+        'title': project_title,
+        'default_map': default,
+        'train_lines': get_train_lines(),
+        'selected_train_line': selected_line
+    }
+    
+    line = get_train_lines().get(selected_line)
     
     m = make_map(line, default_map=default)
     context['map'] = m.get_root().render()
