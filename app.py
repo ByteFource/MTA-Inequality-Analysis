@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from flask import Flask, render_template, request
 import pandas as pd
 import geopandas as gpd
@@ -283,7 +284,7 @@ def get_train_lines():
        "S 42 St Shuttle, Franklin Av Shuttle, and Rockaway Park Shuttle trains (shuttle service)" : "S",
        "W train (Broadway local)" : "W",
         "Z train (Nassau Street express) " : "Z",
-        "default": None
+        "Select Train Line": None
     }
 
 @app.route('/about')
