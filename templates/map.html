@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title %}Interactive Map{% endblock title %}
+{% block custom %}
+    <style>
+        .app {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 2rem;
+        }
+        #map-container {
+            height: 60vh;
+            width: 100%;
+            margin: 20px;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+{% endblock custom %}
+{% block content %}
+    <div class="app container-fluid bg-dark">
+        <!-- Map placeholder -->
+        <div id="map-container" class="mb-4 position-relative">
+            <div id="map">
+                {% if map %}
+                    {{ map|safe}}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Dropdown for selecting train line -->
+        <form action="/" method="POST" class="form-inline">
+            <div class="controls-container mb-3">
+                <!-- choice for selecting between race or income map  -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="map_type" id="raceMap" value="race" {% if default_map == 'race' %} checked {% endif %}>
+                            <label class="form-check-label text-bg-dark" for="raceMap">Race Map</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="map_type" id="incomeMap" value="income" {% if default_map == 'income' %} checked {% endif %}>
+                            <label class="form-check-label text-bg-dark" for="incomeMap">Income Map</label>
+                        </div>
+                    </div>
+                    <!-- Dropdown for selecting train line -->
+                    <div class="col-md-4 mb-3">
+                        <select name="train_line" id="trainline-dropdown" class="form-select">
+                            <option value="default">Select Train Line</option>
+                            {% for train_line in train_lines %}
+                                <option value="{{ train_line }}" {% if train_line == selected_train_line %}selected{% endif %}>{{ train_line }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="submit" value="Show on Map" class="btn btn-primary">
+                    </div>
+                </div>
+        </form>
+
+        <div>
+            <!-- Button to display the delay list -->
+            <button type="button" onclick="displayDelayList()" class="btn btn-secondary">Display Delay List</button>
+        
+            <!-- Button to display the performance list -->
+            <button type="button" onclick="displayPerformanceList()" class="btn btn-secondary">Display Performance List</button>
+        </div>
+        
+        <!-- Placeholder for the sorted list data -->
+        <div id="sortedList">
+            
+        </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+    
+    <!-- Custom JavaScript for interactions and data loading -->
+    <script>
+        function displayDelayList() {
+            fetch('/delay_list')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the HTML to display the delay list data
+                    // For example, you can update a div with the new data
+                    // Here's a simplified example assuming you have a div with id "sortedList"
+                    document.getElementById('sortedList').innerHTML = `
+                        <h2 class="text-bg-dark">Most-to-Least Delays: 2018</h2>
+                        <table class="table">
+                            <thead>
+                                <tr class="table-dark">
+                                    <th scope="col">Train Line</th>
+                                    <th scope="col">Total Delay Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${Object.keys(data).map(train => `
+                                    <tr class="table-dark">
+                                        <td>${train}</td>
+                                        <td>${data[train]}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                });
+        }
+
+        function displayPerformanceList() {
+            fetch('/performance_list')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the HTML to display the performance list data
+                    // Similar to the delay list display
+                    document.getElementById('sortedList').innerHTML = `
+                        <h2 class="text-bg-dark" >On-Time Performance: 2014-2023</h2>
+                        <table class="table">
+                            <thead>
+                                <tr class="table-dark">
+                                    <th scope="col">Train Line</th>
+                                    <th scope="col">Average Terminal On-Time Performance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${Object.keys(data).map(train => `
+                                    <tr class="table-dark">
+                                        <td>${train}</td>
+                                        <td>${data[train]}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                });
+        }
+
+        window.onload = function () {
+            displayDelayList();
+        };
+    </script>
+{% endblock scripts %}

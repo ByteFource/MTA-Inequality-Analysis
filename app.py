@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 import pandas as pd
 import geopandas as gpd
 import folium
+import json
 
 app = Flask(__name__)
 
@@ -151,8 +152,8 @@ def make_map(line, default_map):
     
     # explain the colors of the subway lines
     legend_html = '''
-         <div style="position: fixed; 
-         bottom: 50px; left: 50px; width: 200px; height: 230px; z-index:9999; font-size:14px;
+         <div style="position: fixed;
+         bottom: 10px; left: 50px; width: 200px; height: 230px; z-index:9999; font-size:14px; color: white;
          ">&nbsp; Subway Lines <br>
          &nbsp; 1 2 3 &nbsp; <i class="fa fa-circle" style="color:#EE352E"></i><br>
          &nbsp; 4 5 6 &nbsp; <i class="fa fa-circle" style="color:#00933C"></i><br>
@@ -198,8 +199,12 @@ def make_map(line, default_map):
     folium.LayerControl().add_to(m)
     return m
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/map', methods=['GET', 'POST'])
+def map():
     # Define your project title
     project_title = "Is The Mta Racist?"
     # Pass the project title to the template
@@ -225,18 +230,31 @@ def index():
     m = make_map(line, default_map=default)
     context['map'] = m.get_root().render()
 
-    return render_template("index.html", **context)
+    return render_template("map.html", **context)
 
 @app.route('/delay_list')
 def get_delay_list():
     delay_lines = total_delays_by_line.set_index('Line')['Total Delay Time'].to_dict()
-    return jsonify(delay_lines)
+    # convert the values to seconds timedelta
+    delay_lines = {k: pd.to_timedelta(v) for k, v in delay_lines.items()}
+    # sort the dictionary by the values
+    sorted_delay_lines = {k: v for k, v in sorted(delay_lines.items(), key=lambda item: item[1].total_seconds())}
+    # convert the values back to string
+    sorted_delay_lines = {k: str(v) for k, v in sorted_delay_lines.items()}
+    return json.dumps(sorted_delay_lines)
 
 @app.route('/performance_list')
 def get_performance_list():
     performance_lines = on_time.set_index('Line')['Average Terminal On-Time Performance'].to_dict()
-    return jsonify(performance_lines)
+    return json.dumps(performance_lines)
 
+@app.route('/fun-facts')
+def fun_facts():
+    return render_template('fun_facts.html')
+
+@app.route('/about-us')
+def about_us():
+    return render_template('about-us.html') 
 
 def get_train_lines():
     return {
