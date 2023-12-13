@@ -7,7 +7,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            margin: 2rem;
+            height: 100%;
         }
         #map-container {
             height: 60vh;
@@ -35,7 +35,7 @@
         </div>
 
         <!-- Dropdown for selecting train line -->
-        <form action="/" method="POST" class="form-inline">
+        <form action="/map" method="POST">
             <div class="controls-container mb-3">
                 <!-- choice for selecting between race or income map  -->
                 <div class="row">
@@ -51,14 +51,14 @@
                     </div>
                     <!-- Dropdown for selecting train line -->
                     <div class="col-md-4 mb-3">
-                        <select name="train_line" id="trainline-dropdown" class="form-select">
-                            <option value="default">Select Train Line</option>
+                        <select name="train_line" id="trainline-dropdown" class="form-select-lg">
+                            <option selected value="Select Train Line">Select Train Line</option>
                             {% for train_line in train_lines %}
                                 <option value="{{ train_line }}" {% if train_line == selected_train_line %}selected{% endif %}>{{ train_line }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 m-5">
                         <input type="submit" value="Show on Map" class="btn btn-primary">
                     </div>
                 </div>
@@ -87,10 +87,8 @@
                 .then(response => response.json())
                 .then(data => {
                     // Update the HTML to display the delay list data
-                    // For example, you can update a div with the new data
-                    // Here's a simplified example assuming you have a div with id "sortedList"
                     document.getElementById('sortedList').innerHTML = `
-                        <h2 class="text-bg-dark">Most-to-Least Delays: 2018</h2>
+                        <h2 class="text-bg-dark">Total Delays (2018)</h2>
                         <table class="table">
                             <thead>
                                 <tr class="table-dark">
@@ -139,8 +137,7 @@
                 });
         }
 
-        window.onload = function () {
-            displayDelayList();
-        };
+        // call the function to display the delay list by default
+        displayDelayList();
     </script>
 {% endblock scripts %}
