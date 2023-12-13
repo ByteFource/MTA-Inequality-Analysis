@@ -101,6 +101,41 @@
                 <input type="submit" value="Show on Map" class="btn btn-primary">
             </div>
         </form>
+
+            <!-- Button to display the first sorted list -->
+        <form action="/display_sorted_list_1" method="get">
+            <input type="submit" value="Display Sorted List 1">
+        </form>
+
+        <!-- Button to display the second sorted list -->
+        <form action="/display_sorted_list_2" method="get">
+            <input type="submit" value="Display Sorted List 2">
+        </form>
+
+        <!-- Placeholder for the sorted list data -->
+        <div id="sortedList">
+            {% if trains %}
+                <h2>Sorted List</h2>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Train ID</th>
+                            <th>Train Name</th>
+                            <th>Total Delay Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for train in trains %}
+                            <tr>
+                                <td>{{ train['Train ID'] }}</td>
+                                <td>{{ train['Train Name'] }}</td>
+                                <td>{{ train['Total Delay Time'] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Leaflet JavaScript -->
