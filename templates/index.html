@@ -102,42 +102,22 @@
             </div>
         </form>
 
-            <!-- Button to display the first sorted list -->
-        <form action="/display_sorted_list_1" method="get">
-            <input type="submit" value="Display Sorted List 1">
-        </form>
-
-        <!-- Button to display the second sorted list -->
-        <form action="/display_sorted_list_2" method="get">
-            <input type="submit" value="Display Sorted List 2">
-        </form>
+        <div>
+            <!-- Button to display the delay list -->
+            <button onclick="displayDelayList()">Display Delay List</button>
+        
+            <!-- Button to display the performance list -->
+            <button onclick="displayPerformanceList()">Display Performance List</button>
+        </div>
+        
 
         <!-- Placeholder for the sorted list data -->
         <div id="sortedList">
-            {% if trains %}
-                <h2>Sorted List</h2>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Train ID</th>
-                            <th>Train Name</th>
-                            <th>Total Delay Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for train in trains %}
-                            <tr>
-                                <td>{{ train['Train ID'] }}</td>
-                                <td>{{ train['Train Name'] }}</td>
-                                <td>{{ train['Total Delay Time'] }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
+            
         </div>
     </div>
 
+    
     <!-- Leaflet JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -151,29 +131,65 @@
 
     <!-- JavaScript to make neighborhood dropdown searchable -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var inputField = document.getElementById('neighborhood-input');
-            var dropdown = document.getElementById('neighborhood-dropdown');
+        function displayDelayList() {
+            fetch('/delay_list')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the HTML to display the delay list data
+                    // For example, you can update a div with the new data
+                    // Here's a simplified example assuming you have a div with id "sortedList"
+                    document.getElementById('sortedList').innerHTML = `
+                        <h2>Most-to-Least Delays: 2018</h2>
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Train Line</th>
+                                    <th>Total Delay Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${Object.keys(data).map(train => `
+                                    <tr>
+                                        <td>${train}</td>
+                                        <td>${data[train]}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                });
+        }
 
-            inputField.addEventListener('keyup', function() {
-                var filter = inputField.value.toUpperCase();
-                var options = dropdown.options;
-                for (const element of options) {
-                    var txtValue = element.textContent or element.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        element.style.display = "";
-                    } else {
-                        element.style.display = "none";
-                    }
-                }
-            });
+        function displayPerformanceList() {
+            fetch('/performance_list')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the HTML to display the performance list data
+                    // Similar to the delay list display
+                    document.getElementById('sortedList').innerHTML = `
+                        <h2>On-Time Performance: 2014-2023</h2>
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Train Line</th>
+                                    <th>Average Terminal On-Time Performance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${Object.keys(data).map(train => `
+                                    <tr>
+                                        <td>${train}</td>
+                                        <td>${data[train]}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                });
+        }
 
-            // Sync the select dropdown with the input field
-            dropdown.addEventListener('change', function() {
-                inputField.value = dropdown.options[dropdown.selectedIndex].text;
-            });
-        });
-    </script>  
+    </script>
+
 </div>
 </body>
 </html>
