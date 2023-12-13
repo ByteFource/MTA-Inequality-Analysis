@@ -78,17 +78,18 @@
 
         <!-- Dropdown for selecting train line -->
         <form action="/" method="POST" class="form-inline">
-            <div class="controls-container">
+            <div class="controls-container mb-3">
                 <!-- choice for selecting between race or income map  -->
-                
-                <label>
-                    <input type="radio" name="map_type" value="race" {% if default_map == 'race' %}checked{% endif %}>
-                    Race Map
-                </label>
-                <label>
-                    <input type="radio" name="map_type" value="income" {% if default_map == 'income' %}checked{% endif %}>
-                    Income Map
-                </label>
+                <div class="mb-3">
+                    <label>
+                        <input type="radio" name="map_type" value="race" {% if default_map == 'race' %}checked{% endif %}>
+                        Race Map
+                    </label>
+                    <label>
+                        <input type="radio" name="map_type" value="income" {% if default_map == 'income' %}checked{% endif %}>
+                        Income Map
+                    </label>
+                </div>
 
                 <!-- Dropdown for selecting train line -->
                 <select name="train_line" id="trainline-dropdown" style="max-width: 200px;" class="form-control mb-3">
