@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 import pandas as pd
 import geopandas as gpd
 import folium
-import fiona
 
 app = Flask(__name__)
 
@@ -11,8 +10,9 @@ stops_delay_count = pd.read_csv('data/stops_delay_count.csv')
 gdf_stops_delay_count = gpd.GeoDataFrame(stops_delay_count, geometry=gpd.points_from_xy(stops_delay_count['GTFS Longitude'], stops_delay_count['GTFS Latitude']), crs='EPSG:4326')
 gdf_subway = gpd.read_file('data/my_subway_lines.geojson')
 gdf_avg_inc = gpd.read_file('data/average_income_2021.geojson')
+race = gpd.read_file('data/nyc-race.geojson')
 
-def make_map(line):
+def make_map(line, default_map):
     
     rt_id_to_stops = route_id_to_stops.set_index('route_id').T.to_dict('list')
     rt_id_to_stops = {k: v[0].split(', ') for k, v in rt_id_to_stops.items()}
@@ -39,7 +39,7 @@ def make_map(line):
         legend_name='Average Income',
         highlight=True,
         smooth_factor=0
-    ).add_to(m)
+    )
     
     income_tooltip = folium.GeoJsonTooltip(
         fields=['ZipCode', 'B19013001', 'Neighborhood', 'Borough'], 
@@ -51,6 +51,38 @@ def make_map(line):
     )
     
     income_choropleth.geojson.add_child(income_tooltip)
+    
+    race_choropleth = folium.Choropleth(
+        geo_data=race,
+        name='NYC Race Map',
+        data=race,
+        columns=['name', 'Total Population'],
+        key_on='feature.properties.name',
+        fill_color='YlOrBr',
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name='Total Population',
+        highlight=True,
+        smooth_factor=1.0
+    )
+
+    fields = ['Total Population', 'White alone', 'Black or African American Alone', 'American Indian and Alaska Native alone', 'Asian alone', 'Native Hawaiian and Other Pacific Islander Alone', 'Some other race alone', 'Two or more races','Hispanic or Latino (Total)']
+    aliases = [field + ':' for field in fields]
+    race_tooltip = folium.GeoJsonTooltip(
+        fields=['name', *fields],
+        aliases=['Zip Code:', *aliases],
+        sticky=True, 
+        opacity=0.9, 
+        direction='top',
+        style="font-size: 12px; width: 100 vw;",
+    )
+
+    if default_map == "income":
+        m.add_child(income_choropleth)
+    else:
+        m.add_child(race_choropleth)
+
+    race_choropleth.geojson.add_child(race_tooltip)
         
     if line:
         gdf_line = gdf_subway[gdf_subway['name'].str.contains(line)]
@@ -70,11 +102,10 @@ def make_map(line):
                        sticky=True, 
                        opacity=0.9, 
                        direction='top',
-                       style="font-size: 12px; max-width: 300px;",
+                       style="font-size: 12px;",
                        labels=True
                     )
     ).add_to(m)
-    
        
     if line:
         stops = rt_id_to_stops[line]
@@ -169,23 +200,25 @@ def index():
     project_title = "Is The Mta Racist?"
     # Pass the project title to the template
     
-    df = pd.read_csv('data/Median_Incomes.csv')
     
-    # Filter by TimeFrame and get unique locations
-    locations = df[df['TimeFrame'] == 2018]['Location'].unique().tolist()
+    if request.method == 'POST':
+        selected_line = request.form.get('train_line')
+        default = request.form.get('map_type')
+        print(default)
+    else:
+        selected_line = 'default'
+        default = 'race'
     
     context = {
         'title': project_title,
-        'locations': locations,
-        'train_lines': get_train_lines()
+        'default_map': default,
+        'train_lines': get_train_lines(),
+        'selected_train_line': selected_line
     }
     
-    if request.method == 'POST':
-        line = get_train_lines()[request.form.get('train_line')]
-    else:
-        line = None
+    line = get_train_lines().get(selected_line)
     
-    m = make_map(line)
+    m = make_map(line, default_map=default)
     context['map'] = m.get_root().render()
 
     return render_template("index.html", **context)
