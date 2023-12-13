@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import geopandas as gpd
 import folium
@@ -10,7 +10,11 @@ stops_delay_count = pd.read_csv('data/stops_delay_count.csv')
 gdf_stops_delay_count = gpd.GeoDataFrame(stops_delay_count, geometry=gpd.points_from_xy(stops_delay_count['GTFS Longitude'], stops_delay_count['GTFS Latitude']), crs='EPSG:4326')
 gdf_subway = gpd.read_file('data/my_subway_lines.geojson')
 gdf_avg_inc = gpd.read_file('data/average_income_2021.geojson')
+total_delays_by_line = pd.read_csv('data/total_delay_time_by_lines.csv')
+total_delays_by_stop = pd.read_csv('data/total_delay_time_by_stops.csv')
 race = gpd.read_file('data/nyc-race.geojson')
+on_time = pd.read_csv("data/avg_terminal_on_time_performance.csv")
+
 
 def make_map(line, default_map):
     
@@ -223,6 +227,17 @@ def index():
 
     return render_template("index.html", **context)
 
+@app.route('/delay_list')
+def get_delay_list():
+    delay_lines = total_delays_by_line.set_index('Line')['Total Delay Time'].to_dict()
+    return jsonify(delay_lines)
+
+@app.route('/performance_list')
+def get_performance_list():
+    performance_lines = on_time.set_index('Line')['Average Terminal On-Time Performance'].to_dict()
+    return jsonify(performance_lines)
+
+
 def get_train_lines():
     return {
         "1 train (Broadway-7 Avenue local)" : "1",
@@ -250,6 +265,10 @@ def get_train_lines():
         "Z train (Nassau Street express) " : "Z",
         "default": None
     }
+
+@app.route('/about')
+def about():
+    return render_template('about-us.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
