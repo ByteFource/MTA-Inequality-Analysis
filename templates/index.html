@@ -1,11 +1,8 @@
-{% extends 'base.html' %}
-
-{% block title %}Home{% endblock title %}
-
-{% block custom %}
+{% extends 'base.html' %} {% block title %}Home{% endblock title %} {% block
+custom %}
 <style>
   body {
-    background-image: url('https://images2.alphacoders.com/546/546678.jpg');
+    background-image: url("https://images2.alphacoders.com/546/546678.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -46,49 +43,70 @@
     font-size: 0.8rem;
   }
 </style>
-{% endblock custom %}
+{% endblock custom %} {% block content %}
+<div class="image-credit">
+  This picture was uploaded by Samim Hasan to Wallpaper Abyss
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-11 content-box text-center">
+      <h1>Is The MTA Racist?</h1>
+    </div>
+    <div class="col-lg-11 content-box">
+      <h2>The Problem at hand:</h2>
+      <p>
+        Have you ever been frustrated by consistent train delays during your
+        daily commute? Our team certainly was, and it drove us to uncover the
+        truth behind these persistent interruptions. After sifting through over
+        5 million data entries, we made a startling discovery: neighborhoods
+        with lower median incomes suffer the most frequent and prolonged delays.
+        This was a revelation, considering the MTA's reputation as an affordable
+        transit option for New Yorkers. It's important to note that other
+        factors, like litter on the tracks, could be influencing this trend. But
+        our findings are clear: lower income areas endure the brunt of the
+        city's train delays.
+      </p>
+      <!-- Hamzat's section -->
+      <button class="opaque-btn">Hamzat:</button>
+      <p>
+        I used to ride the A/C trains when I was in high school and I noticed
+        that the C train has frequent delays at the Euclid Av stop and the A
+        train would has more frequent delays at Grant Av and I used to wonder
+        why that was.
+      </p>
+      <!-- David's section -->
+      <button class="opaque-btn">David:</button>
+      <p>
+        Growing up, my native train-line was the 7. I noticed that it usually
+        ran smoother when I would ride to Manhattan. It definitely felt like the
+        MTA prioritized service going into the city and not the other way
+        around.
+      </p>
+      <!-- Khaled's section -->
+      <button class="opaque-btn">Khaled:</button>
+      <p>
+        Riding the MTA in New York City feels like two different worlds. When I
+        go to school in Harlem, the trains are often late at almost every stop,
+        making the trip slow and frustrating. But, when I head from school to my
+        job downtown, it's a completely different story. The trains run smoothly
+        and on time, getting me there without any problems. It's interesting to
+        see how different the train service can be in different parts of the
+        city.
+      </p>
+      <!-- Baljinder's section -->
+      <button class="opaque-btn">Baljinder:</button>
+      <p>
+        I live in a deep part of Queens and go to school in Harlem; my daily
+        commute takes me through Queens, Brooklyn, and Manhattan and the stops
+        that always have the most delays are always the same. West Fourth,
+        Broadway Junction, 145th Street, all of these stations have insane
+        delays and are in more diverse areas that have a lower median income.
+      </p>
 
-{% block content %}
-  <div class="image-credit">
-    This picture was uploaded by Samim Hasan to Wallpaper Abyss
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-11 content-box text-center">
-          <h1>Is The MTA Racist?</h1> </div>
-      <div class="col-lg-11 content-box" ><h2>The Problem at hand:</h2>
-        <p>
-          Have you ever been frustrated by consistent train delays during your daily commute? Our team certainly was, and it drove us to uncover the truth behind these persistent interruptions. After sifting through over 5 million data entries, we made a startling discovery: neighborhoods with lower median incomes suffer the most frequent and prolonged delays. This was a revelation, considering the MTA's reputation as an affordable transit option for New Yorkers. It's important to note that other factors, like litter on the tracks, could be influencing this trend. But our findings are clear: lower income areas endure the brunt of the city's train delays.
-        </p>
-        <!-- Hamzat's section -->
-        <button class="opaque-btn">Hamzat:</button>
-        <p>
-          I used to ride the A/C trains when I was in high school and I noticed that the C train has frequent delays at the Euclid Av stop and the A train would has more frequent delays at Grant Av and I used to wonder why that was.
-        </p>
-        <!-- David's section -->
-        <button class="opaque-btn">David:</button>
-        <p>
-          Growing up, my native train-line was the 7. I noticed that it usually ran smoother when I would ride to Manhattan. It definitely felt like the MTA prioritized service going into the city and not the other way around.
-        </p>
-        <!-- Khaled's section -->
-        <button class="opaque-btn">Khaled:</button>
-        <p>
-          Riding the MTA in New York City feels like two different worlds. When I go to school in Harlem, the trains are often late at almost every stop, making the trip slow and frustrating. But, when I head from school to my job downtown, it's a completely different story. The trains run smoothly and on time, getting me there without any problems. It's interesting to see how different the train service can be in different parts of the city.
-        </p>
-        <!-- Baljinder's section -->
-        <button class="opaque-btn">Baljinder: </button>
-        <p>
-          I live in a deep part of Queens and go to school in Harlem; my daily commute takes me through Queens, Brooklyn, and Manhattan and the stops that always have the most delays are always the same. West Fourth, Broadway Junction, 145th Street, all of these stations have insane delays and are in more diverse areas that have a lower median income.
-        </p>
-        <h2>Interactive map:</h2>
-        <p>
-        put direction here
-        </p>
-        <div class="map-link">
-          <a href="/map" class="btn btn-primary">Click here for the Map</a>
-        </div>
+      <div class="map-link">
+        <a href="/map" class="btn btn-primary">Click here for the Map</a>
       </div>
     </div>
   </div>
+</div>
 {% endblock content %}
-
