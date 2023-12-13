@@ -11,6 +11,8 @@ stops_delay_count = pd.read_csv('data/stops_delay_count.csv')
 gdf_stops_delay_count = gpd.GeoDataFrame(stops_delay_count, geometry=gpd.points_from_xy(stops_delay_count['GTFS Longitude'], stops_delay_count['GTFS Latitude']), crs='EPSG:4326')
 gdf_subway = gpd.read_file('data/my_subway_lines.geojson')
 gdf_avg_inc = gpd.read_file('data/average_income_2021.geojson')
+total_delays_by_line = pd.read_csv('data/total_delay_time_by_lines.csv')
+total_delays_by_stop = pd.read_csv('data/total_delay_time_by_stops.csv')
 
 def make_map(line):
     
@@ -187,6 +189,16 @@ def index():
     
     m = make_map(line)
     context['map'] = m.get_root().render()
+
+
+    ### Ranking of lines display
+    total_delays_by_line['Total Delay Time'] = pd.to_timedelta(total_delays_by_line['Total Delay Time']).dt.total_seconds()
+    sorted_lines = total_delays_by_line.sort_values(by='Total Delay Time')
+
+    # reverse order to maintain worst to best
+    sorted_lines = sorted_lines.iloc[::-1]
+
+    context['trains'] = sorted_lines.to_dict('records')
 
     return render_template("index.html", **context)
 
