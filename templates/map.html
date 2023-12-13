@@ -34,6 +34,20 @@
             </div>
         </div>
 
+        
+        <div class="col-md-4">
+            <!-- Description underneath the map -->
+            <div class="text-light mt-3">
+                <p>Map Legend:</p>
+                <ul>
+                    <li style="color: red;">Red Stops = Average delay time is longer than one minute.</li>
+                    <li style="color: rgb(57, 189, 4);">Green Stops = Average delay time is less than one minute.</li>
+                    <li style="color: rgb(0, 204, 255);">Blue Stops = Average delay time is less than 0 seconds (the train usually arrives early).</li>
+                </ul>
+            </div>
+        </div>
+
+
         <!-- Dropdown for selecting train line -->
         <form action="/map" method="POST">
             <div class="controls-container mb-3">
