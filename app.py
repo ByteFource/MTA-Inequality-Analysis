@@ -218,5 +218,9 @@ def get_train_lines():
         "default": None
     }
 
+@app.route('/about')
+def about():
+    return render_template('about-us.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
