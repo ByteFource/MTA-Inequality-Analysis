@@ -1,195 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Data Dashboard</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2JoaLlnzLlNS/kit+nDX4PqCgYt4lDnA/jcXTMlV/0jz7jRyfqJw1TT1MvzLtwTuqFqCqg=="
-    crossorigin=""/>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- Custom CSS for styling -->
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(#2EDA6D, #2EDAC3) !important; /* Gradient background */
-        }
-        .app {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        #title-bar {
-            background-color: red;
-            color: white;
-            padding: 10px 20px;
-            display: inline-block;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-top: 10px;
-            font-size: 24px;
-            border-radius: 15px; /* Rounded corners */
-        }
-        #map-container {
-            height: 50%;
-            width: 50%;
-            position: relative;
-            margin: 20px 150px;
-            background-color: white;
-        }
-        #map {
-            height: 100%;
-            width: 100%;
-        }
-        .controls-container {
-            top: 60px;
-            left: 75%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        select {
-            width: 200px;
-            padding: 5px;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div id="title-bar">Is The MTA Racist?</div>
-    
-    <div class="app">
-        <!-- Map placeholder -->
-        <div id="map-container">
-            <div id="map">
-                {% if map %}
-                    {{ map|safe}}
-                {% endif %}
-            </div>
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block custom %}
+<style>
+  body {
+    background-image: url('https://images2.alphacoders.com/546/546678.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .content-box {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin: 2rem;
+    padding: 2rem;
+    border-radius: 0.5rem;
+  }
+
+  .opaque-btn {
+    background-color: rgba(0, 0, 0, 0.8); /* Black with opacity */
+    color: white; /* White text */
+    border: none; /* No border */
+    margin-bottom: 1rem; /* Space below button */
+    display: block; /* Make the button a block element */
+    width: 100%; /* Full width */
+    text-align: left; /* Align text to the left */
+    border-radius: 20px; /* Rounded corners */
+    padding: 0.5rem 1rem; /* Padding inside the button */
+  }
+
+  .map-link {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .image-credit {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+  }
+</style>
+{% endblock custom %}
+
+{% block content %}
+  <div class="image-credit">
+    This picture was uploaded by Samim Hasan to Wallpaper Abyss
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-11 content-box text-center">
+          <h1>Is The MTA Racist?</h1> </div>
+      <div class="col-lg-11 content-box" ><h2>The Problem at hand:</h2>
+        <p>
+          Have you ever been frustrated by consistent train delays during your daily commute? Our team certainly was, and it drove us to uncover the truth behind these persistent interruptions. After sifting through over 5 million data entries, we made a startling discovery: neighborhoods with lower median incomes suffer the most frequent and prolonged delays. This was a revelation, considering the MTA's reputation as an affordable transit option for New Yorkers. It's important to note that other factors, like litter on the tracks, could be influencing this trend. But our findings are clear: lower income areas endure the brunt of the city's train delays.
+        </p>
+        <!-- Hamzat's section -->
+        <button class="opaque-btn">Hamzat:</button>
+        <p>
+          I used to ride the A/C trains when I was in high school and I noticed that the C train has frequent delays at the Euclid Av stop and the A train would has more frequent delays at Grant Av and I used to wonder why that was.
+        </p>
+        <!-- David's section -->
+        <button class="opaque-btn">David:</button>
+        <p>
+          Growing up, my native train-line was the 7. I noticed that it usually ran smoother when I would ride to Manhattan. It definitely felt like the MTA prioritized service going into the city and not the other way around.
+        </p>
+        <!-- Khaled's section -->
+        <button class="opaque-btn">Khaled:</button>
+        <p>
+          Riding the MTA in New York City feels like two different worlds. When I go to school in Harlem, the trains are often late at almost every stop, making the trip slow and frustrating. But, when I head from school to my job downtown, it's a completely different story. The trains run smoothly and on time, getting me there without any problems. It's interesting to see how different the train service can be in different parts of the city.
+        </p>
+        <!-- Baljinder's section -->
+        <button class="opaque-btn">Baljinder: </button>
+        <p>
+          I live in a deep part of Queens and go to school in Harlem; my daily commute takes me through Queens, Brooklyn, and Manhattan and the stops that always have the most delays are always the same. West Fourth, Broadway Junction, 145th Street, all of these stations have insane delays and are in more diverse areas that have a lower median income.
+        </p>
+        <h2>Interactive map:</h2>
+        <p>
+        put direction here
+        </p>
+        <div class="map-link">
+          <a href="/map" class="btn btn-primary">Click here for the Map</a>
         </div>
-
-        <!-- Dropdown for selecting train line -->
-        <form action="/" method="POST" class="form-inline">
-            <div class="controls-container mb-3">
-                <!-- choice for selecting between race or income map  -->
-                <div class="mb-3">
-                    <label>
-                        <input 
-                            type="radio" name="map_type" value="race" {% if default_map == 'race' %} checked {% endif %}>
-                        Race Map
-                    </label>
-                    <label>
-                        <input type="radio" name="map_type" value="income" {% if default_map == 'income' %} checked {% endif %}>
-                        Income Map
-                    </label>
-                </div>
-
-                <!-- Dropdown for selecting train line -->
-                <select name="train_line" id="trainline-dropdown" style="max-width: 200px;" class="form-control mb-3">
-                    <option value="default">Select Train Line</option>
-                    {% for train_line in train_lines %}
-                    <option value="{{ train_line }}" {% if train_line == selected_train_line %}selected{% endif %}>{{ train_line }}</option>
-                    {% endfor %}
-                <input type="submit" value="Show on Map" class="btn btn-primary">
-            </div>
-        </form>
-
-        <div>
-            <!-- Button to display the delay list -->
-            <button onclick="displayDelayList()">Display Delay List</button>
-        
-            <!-- Button to display the performance list -->
-            <button onclick="displayPerformanceList()">Display Performance List</button>
-        </div>
-        
-
-        <!-- Placeholder for the sorted list data -->
-        <div id="sortedList">
-            
-        </div>
+      </div>
     </div>
+  </div>
+{% endblock content %}
 
-    
-    <!-- Leaflet JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-gZwQqov7RQJB4DxPhe6gkxjIw7eet/NMfttq+bfsekSRI3x9bKE5BR/V3uV6mGe1a6P/cz5o7IhKPjV+I1I6eA=="
-    crossorigin=""></script>
-    
-    <!-- Custom JavaScript for interactions and data loading -->
-    <script>
-        // Additional JavaScript for handling dropdowns and map interactions
-    </script>
-
-    <!-- JavaScript to make neighborhood dropdown searchable -->
-    <script>
-        function displayDelayList() {
-            fetch('/delay_list')
-                .then(response => response.json())
-                .then(data => {
-                    // Update the HTML to display the delay list data
-                    // For example, you can update a div with the new data
-                    // Here's a simplified example assuming you have a div with id "sortedList"
-                    document.getElementById('sortedList').innerHTML = `
-                        <h2>Most-to-Least Delays: 2018</h2>
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>Train Line</th>
-                                    <th>Total Delay Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${Object.keys(data).map(train => `
-                                    <tr>
-                                        <td>${train}</td>
-                                        <td>${data[train]}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    `;
-                });
-        }
-
-        function displayPerformanceList() {
-            fetch('/performance_list')
-                .then(response => response.json())
-                .then(data => {
-                    // Update the HTML to display the performance list data
-                    // Similar to the delay list display
-                    document.getElementById('sortedList').innerHTML = `
-                        <h2>On-Time Performance: 2014-2023</h2>
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>Train Line</th>
-                                    <th>Average Terminal On-Time Performance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${Object.keys(data).map(train => `
-                                    <tr>
-                                        <td>${train}</td>
-                                        <td>${data[train]}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    `;
-                });
-        }
-
-    </script>
-
-</div>
-</body>
-</html>
