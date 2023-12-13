@@ -7,7 +7,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            margin: 2rem;
+            height: 100%;
         }
         #map-container {
             height: 60vh;
@@ -35,7 +35,7 @@
         </div>
 
         <!-- Dropdown for selecting train line -->
-        <form action="/" method="POST" class="form-inline">
+        <form action="/map" method="POST" class="form-inline">
             <div class="controls-container mb-3">
                 <!-- choice for selecting between race or income map  -->
                 <div class="row">
@@ -51,7 +51,7 @@
                     </div>
                     <!-- Dropdown for selecting train line -->
                     <div class="col-md-4 mb-3">
-                        <select name="train_line" id="trainline-dropdown" class="form-select">
+                        <select name="train_line" id="trainline-dropdown" class="form-select form-select-sm">
                             <option value="default">Select Train Line</option>
                             {% for train_line in train_lines %}
                                 <option value="{{ train_line }}" {% if train_line == selected_train_line %}selected{% endif %}>{{ train_line }}</option>
@@ -59,7 +59,7 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <input type="submit" value="Show on Map" class="btn btn-primary">
+                        <input value="Show on Map" class="btn btn-primary">
                     </div>
                 </div>
         </form>
@@ -139,8 +139,7 @@
                 });
         }
 
-        window.onload = function () {
-            displayDelayList();
-        };
+        // call the function to display the delay list by default
+        displayDelayList();
     </script>
 {% endblock scripts %}

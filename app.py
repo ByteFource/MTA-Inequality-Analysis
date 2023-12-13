@@ -195,6 +195,8 @@ def make_map(line, default_map):
     
     m.get_root().html.add_child(folium.Element(legend_html))
     m.get_root().script.add_child(folium.Element(js_callback))
+    m.get_root().header.add_child(folium.Element('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">'))
+    m.get_root().header.add_child(folium.Element('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>'))
     
     folium.LayerControl().add_to(m)
     return m
@@ -227,7 +229,7 @@ def map():
     
     line = get_train_lines().get(selected_line)
     
-    m = make_map(line, default_map=default)
+    m = make_map(line, default)
     context['map'] = m.get_root().render()
 
     return render_template("map.html", **context)
